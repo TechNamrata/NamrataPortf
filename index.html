@@ -343,24 +343,24 @@
                      <i data-lucide="github" class="w-4 h-4"></i> Github
                  </a>
             </div>
-            <button id="menu-btn" class="md:hidden z-50">
+            <button id="menu-btn" class="md:hidden">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-bg-color/90 backdrop-blur-xl fixed top-0 left-0 w-full h-screen">
-            <div class="flex flex-col justify-center items-center h-full gap-6">
-                <a href="#about" class="block py-3 px-6 text-center nav-link text-lg">About</a>
-                <a href="#skills" class="block py-3 px-6 text-center nav-link text-lg">Skills</a>
-                <a href="#experience" class="block py-3 px-6 text-center nav-link text-lg">Experience</a>
-                <a href="#projects" class="block py-3 px-6 text-center nav-link text-lg">Projects</a>
-                <a href="#education" class="block py-3 px-6 text-center nav-link text-lg">Education</a>
-                <a href="#contact" class="block py-3 px-6 text-center nav-link text-lg">Contact</a>
-                <div class="pt-6 flex justify-center">
-                    <a href="https://github.com/TechNamrata" target="_blank" class="flex items-center gap-2 bg-secondary-color hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
-                        <i data-lucide="github"></i> Github
-                    </a>
-                </div>
+        <!-- Mobile Menu (Dropdown Style) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-bg-color/90 backdrop-blur-xl">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block py-3 px-6 text-center nav-link">About</a>
+                <a href="#skills" class="block py-3 px-6 text-center nav-link">Skills</a>
+                <a href="#experience" class="block py-3 px-6 text-center nav-link">Experience</a>
+                <a href="#projects" class="block py-3 px-6 text-center nav-link">Projects</a>
+                <a href="#education" class="block py-3 px-6 text-center nav-link">Education</a>
+                <a href="#contact" class="block py-3 px-6 text-center nav-link">Contact</a>
+            </div>
+            <div class="py-4 flex justify-center">
+                <a href="https://github.com/TechNamrata" target="_blank" class="flex items-center gap-2 bg-secondary-color hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+                    <i data-lucide="github"></i> Github
+                </a>
             </div>
         </div>
     </header>
@@ -540,7 +540,7 @@
             <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Get In <span style="color: var(--primary-color);">Touch</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">I'm open to discussing new projects and opportunities. Let's connect!</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                 <div class="card">
+                 <div class="card order-2 md:order-1">
                      <h3 class="text-xl sm:text-2xl font-bold mb-6">Send a Message</h3>
                      <form id="contact-form">
                          <input type="text" name="name" placeholder="Your Name" class="w-full border rounded-lg px-4 py-3 mb-4 focus:ring-2 text-sm" required>
@@ -554,7 +554,7 @@
                      </form>
                      <div id="form-result" class="mt-4 text-center"></div>
                  </div>
-                 <div id="contact-animation" class="h-64 sm:h-80 md:h-full w-full"></div>
+                 <div id="contact-animation" class="h-64 sm:h-80 md:h-full w-full order-1 md:order-2"></div>
             </div>
         </section>
     </main>
@@ -700,17 +700,15 @@
         const menuIcon = menuBtn.querySelector('i');
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isHidden = mobileMenu.classList.contains('hidden');
             mobileMenu.classList.toggle('hidden');
-            document.body.style.overflow = isHidden ? 'hidden' : 'auto';
-            menuIcon.setAttribute('data-lucide', isHidden ? 'x' : 'menu');
+            const isHidden = mobileMenu.classList.contains('hidden');
+            menuIcon.setAttribute('data-lucide', isHidden ? 'menu' : 'x');
             lucide.createIcons();
         });
 
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
-                document.body.style.overflow = 'auto';
                 menuIcon.setAttribute('data-lucide', 'menu');
                 lucide.createIcons();
             });
