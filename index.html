@@ -9,11 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        /* --- THEME: Pure Black & Blue --- */
         :root {
-            --bg-color: #020c1b;
-            --primary-color: #08d9d6;
-            --primary-color-glow: rgba(8, 217, 214, 0.7);
-            --secondary-color: #252a34;
+            --bg-color: #000000;
+            --primary-color: #0077ff;
+            --deep-blue: #0077ff;
+            --primary-color-glow: rgba(0, 119, 255, 0.5);
+            --secondary-color: #1a1a1a;
+            --secondary-color-glow: rgba(26, 26, 26, 0.8);
+            --accent-color: #003366;
             --text-color: #eaeaea;
             --text-muted: #a9a9a9;
         }
@@ -22,6 +26,7 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
+            font-size: 16px; /* Base font size */
         }
         #bg-canvas {
             position: fixed;
@@ -32,11 +37,14 @@
             z-index: -1;
         }
         .card {
-            @apply bg-gray-900/40 backdrop-blur-md border border-gray-700/50 rounded-2xl p-6 transition-all duration-300;
+            background-color: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 51, 102, 0.5);
+            @apply rounded-2xl p-6 transition-all duration-300;
         }
         .card:hover {
-             border-color: var(--primary-color);
-             box-shadow: 0 0 20px 0 rgba(8, 217, 214, 0.15);
+             box-shadow: 0 0 25px 0 rgba(0, 119, 255, 0.2);
+             border-color: rgba(0, 119, 255, 0.5);
         }
         .nav-link {
             @apply text-gray-300 hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-primary-color after:left-0 after:bottom-[-5px] after:transition-all after:duration-300;
@@ -45,7 +53,7 @@
             @apply w-full;
         }
         
-        /* --- New Starfield Button CSS --- */
+        /* --- Starfield Button Style --- */
         .btn {
             display: flex;
             justify-content: center;
@@ -60,8 +68,8 @@
             transition: 0.5s;
             animation: gradient_301 5s ease infinite;
             border: double 4px transparent;
-            background-image: linear-gradient(#212121, #212121),
-                linear-gradient(137.48deg, #00fbff 10%, #252a34 45%, #08d9d6 67%, #023c3b 87%);
+            background-image: linear-gradient(var(--secondary-color), var(--secondary-color)),
+                              linear-gradient(137.48deg, #00BFFF 10%, #0077ff 45%, #003366 87%);
             background-origin: border-box;
             background-clip: content-box, border-box;
         }
@@ -109,7 +117,7 @@
 
         .btn:hover #container-stars {
             z-index: 1;
-            background-color: #212121;
+            background-color: var(--secondary-color);
         }
 
         .btn:hover {
@@ -134,28 +142,27 @@
             height: 200rem;
         }
 
-        #stars::after {
+        #stars::after, #stars::before {
             content: "";
             position: absolute;
+            background-image: radial-gradient(var(--primary-color) 1px, transparent 1%);
+            background-size: 50px 50px;
+        }
+
+        #stars::after {
             top: -10rem;
             left: -100rem;
             width: 100%;
             height: 100%;
             animation: animStarRotate 90s linear infinite;
-            background-image: radial-gradient(#ffffff 1px, transparent 1%);
-            background-size: 50px 50px;
         }
 
         #stars::before {
-            content: "";
-            position: absolute;
             top: 0;
             left: -50%;
             width: 170%;
             height: 500%;
             animation: animStar 60s linear infinite;
-            background-image: radial-gradient(#ffffff 1px, transparent 1%);
-            background-size: 50px 50px;
             opacity: 0.5;
         }
 
@@ -176,17 +183,25 @@
         }
 
         @keyframes pulse_3011 {
-            0% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
-            100% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+            0% { transform: scale(0.75); box-shadow: 0 0 0 0 var(--primary-color-glow); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0,0,0,0); }
+            100% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0,0,0,0); }
         }
-
 
         .tag {
-            @apply bg-cyan-900/50 text-cyan-300 text-xs font-semibold px-3 py-1 rounded-full;
+            background-color: rgba(0, 119, 255, 0.2);
+            color: #87ceeb;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
         }
+        
         .skill-item {
-            @apply flex flex-col items-center justify-center gap-2 text-center border border-gray-700/60 bg-gray-900/60 rounded-lg transition-all duration-300 hover:bg-gray-800/80 hover:border-primary-color w-32 h-32 p-4;
+            @apply flex flex-col items-center justify-center gap-2 text-center border border-accent-color/60 bg-secondary-color/60 rounded-lg transition-all duration-300 hover:bg-accent-color/80 w-full h-full p-4;
+        }
+        .skill-item:hover {
+            border-color: rgba(0, 119, 255, 0.3);
         }
         .skill-item img {
             @apply w-10 h-10 mb-1 filter grayscale brightness-75 transition-all duration-300;
@@ -198,9 +213,23 @@
             @apply text-sm text-text-muted transition-colors duration-300;
         }
          .skill-item:hover span {
-            color: var(--text-color);
+             color: var(--text-color);
          }
         
+        /* --- Profile Photo Blinking Effect --- */
+        .profile-image-container {
+            animation: blink-effect 3s infinite ease-in-out;
+        }
+
+        @keyframes blink-effect {
+            0%, 100% {
+                box-shadow: 0 0 30px 5px rgba(0, 119, 255, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 50px 15px rgba(0, 119, 255, 0.5);
+            }
+        }
+
         /* --- Timeline Style --- */
         .timeline::before {
             content: '';
@@ -252,8 +281,8 @@
 
         /* Themed Contact Form */
         #contact-form input, #contact-form textarea {
-            background-color: var(--secondary-color);
-            border-color: #4a5568;
+            background-color: var(--secondary-color-glow);
+            border-color: var(--accent-color);
         }
         #contact-form input:focus, #contact-form textarea:focus {
             outline: none;
@@ -263,7 +292,19 @@
         }
 
         /* --- RESPONSIVE ADJUSTMENTS --- */
-        @media (max-width: 768px) {
+        @media (max-width: 640px) {
+            body {
+                font-size: 14px;
+            }
+            main.container {
+                @apply pt-20 pb-16 px-4;
+            }
+            section {
+                @apply py-16;
+            }
+            .card {
+                @apply p-4;
+            }
             .timeline::before {
                 left: 20px;
             }
@@ -281,42 +322,26 @@
                 right: auto !important;
             }
             .skill-item {
-                @apply w-28 h-28;
+                @apply w-24 h-24 p-2;
             }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                font-size: 14px;
+             .skill-item img {
+                @apply w-8 h-8;
             }
-            main.container {
-                @apply pt-20 pb-16 px-4;
-            }
-            section {
-                @apply py-16;
-            }
-            .card {
-                @apply p-4;
-            }
-            .timeline-item, .timeline-item:nth-child(even) {
-                padding-left: 60px;
-                padding-right: 10px;
-            }
-             .timeline-icon {
-                width: 35px;
-                height: 35px;
-            }
-            .skill-item {
-                @apply w-[90px] h-[90px] p-2 gap-1;
+            .skill-item span {
+                @apply text-xs;
             }
             .btn {
                 width: 100%;
-                max-width: 13rem;
-                height: 3rem;
+                max-width: 12rem;
+                height: 2.75rem;
             }
             .btn strong {
                 font-size: 11px;
             }
+            h1 { font-size: 2.25rem; } /* ~36px */
+            h2 { font-size: 1.25rem; } /* ~20px */
+            h3 { font-size: 1.125rem; } /* ~18px */
+            p, li { font-size: 0.875rem; } /* 14px */
         }
     </style>
 </head>
@@ -324,10 +349,10 @@
     <canvas id="bg-canvas"></canvas>
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-bg-color/50 backdrop-blur-md border-b border-gray-700/30">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-bg-color/50 backdrop-blur-md">
         <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-xl sm:text-2xl font-bold flex items-center gap-2 tracking-wider">
-                <i data-lucide="code" style="color: var(--primary-color);"></i>
+                <i data-lucide="code" style="color: var(--deep-blue);"></i>
                 <span>Portfolio</span>
             </a>
             <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
@@ -339,7 +364,7 @@
                 <a href="#contact" class="nav-link text-sm">Contact</a>
             </div>
             <div class="hidden md:flex items-center gap-4">
-                 <a href="https://github.com/TechNamrata" target="_blank" class="flex items-center gap-2 bg-secondary-color hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors text-sm">
+                 <a href="https://github.com/TechNamrata" target="_blank" class="flex items-center gap-2 bg-secondary-color hover:bg-accent-color px-4 py-2 rounded-lg transition-colors text-sm">
                      <i data-lucide="github" class="w-4 h-4"></i> Github
                  </a>
             </div>
@@ -358,7 +383,7 @@
                 <a href="#contact" class="block py-3 px-6 text-center nav-link">Contact</a>
             </div>
             <div class="py-4 flex justify-center">
-                <a href="https://github.com/TechNamrata" target="_blank" class="flex items-center gap-2 bg-secondary-color hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+                <a href="https://github.com/TechNamrata" target="_blank" class="flex items-center gap-2 bg-secondary-color hover:bg-accent-color px-4 py-2 rounded-lg transition-colors">
                     <i data-lucide="github"></i> Github
                 </a>
             </div>
@@ -371,7 +396,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                 <div class="space-y-6 order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left">
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                        Hi, I'm <span style="color: var(--primary-color);">Namrata Nayak</span>
+                        Hi, I'm <span style="color: var(--deep-blue);">Namrata Nayak</span>
                     </h1>
                     <h2 class="text-xl sm:text-2xl lg:text-3xl font-medium text-text-muted">A <span id="typewriter"></span></h2>
                     <p class="text-text-muted max-w-lg mx-auto md:mx-0 text-sm sm:text-base">
@@ -384,24 +409,24 @@
                     </a>
                 </div>
                 <div class="relative flex justify-center items-center order-1 md:order-2">
-                     <div class="w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full flex items-center justify-center p-2" style="background: radial-gradient(circle, var(--primary-color) 0%, rgba(2,12,27,0) 70%);">
-                         <img src="nnn.png" 
+                     <div class="w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 profile-image-container rounded-full flex items-center justify-center p-2" style="background: radial-gradient(circle, var(--primary-color) 0%, rgba(0,0,0,0) 70%);">
+                         <img src="image (3).png" 
                               alt="Namrata" 
                               class="w-full h-full rounded-full object-cover bg-bg-color"
-                              onerror="this.onerror=null;this.src='https://placehold.co/400x400/020c1b/eaeaea?text=N';">
+                              onerror="this.onerror=null;this.src='https://placehold.co/400x400/000000/eaeaea?text=N';">
                      </div>
                 </div>
             </div>
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" class="py-20">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Skills</h2>
+        <section id="skills" class="py-16 sm:py-20">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">My <span style="color: var(--deep-blue);">Skills</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">A collection of technologies I use to bring ideas to life.</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="card">
                     <h3 class="text-xl sm:text-2xl font-bold mb-6 text-center">Frontend</h3>
-                    <div class="flex flex-wrap justify-center gap-4">
+                    <div class="grid grid-cols-3 gap-4 place-items-center">
                         <div class="skill-item"><img src="htmlll-removebg-preview (1).png" alt="HTML5"><span>HTML5</span></div>
                         <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3"><span>CSS3</span></div>
                         <div class="skill-item"><img src="JavaScript-logo (1) (1).png" alt="JavaScript"><span>JavaScript</span></div>
@@ -409,7 +434,7 @@
                 </div>
                 <div class="card">
                     <h3 class="text-xl sm:text-2xl font-bold mb-6 text-center">Language and Services</h3>
-                    <div class="flex flex-wrap justify-center gap-4">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 place-items-center">
                         <div class="skill-item"><img src="clogo (1) (1).jpg" alt="C"><span>C</span></div>
                         <div class="skill-item"><img src="cpplogo (1) (1).jpg" alt="C++"><span>C++</span></div>
                         <div class="skill-item"><img src="dm5tyzxel680kvsnrvct (1).png" alt="Arduino"><span>Arduino</span></div>
@@ -420,71 +445,89 @@
         </section>
         
         <!-- Experience Section -->
-        <section id="experience" class="py-20">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Professional <span style="color: var(--primary-color);">Journey</span></h2>
+        <section id="experience" class="py-16 sm:py-20">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Professional <span style="color: var(--deep-blue);">Journey</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">My career path and key roles.</p>
-            <div class="card max-w-4xl mx-auto">
-                <div class="flex flex-col md:flex-row gap-4 md:gap-8">
-                    <div class="md:w-1/3 flex-shrink-0">
-                        <h3 class="text-lg sm:text-xl font-bold">Web Developer Intern</h3>
-                        <p style="color: var(--primary-color);">Brainwave Matrix Solutions</p>
-                        <p class="text-sm text-text-muted">August 2024</p>
+            <div class="max-w-4xl mx-auto flex flex-col gap-8">
+                <div class="card">
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-8">
+                        <div class="md:w-1/3 flex-shrink-0">
+                            <h3 class="text-lg sm:text-xl font-bold">Summer Research Intern</h3>
+                            <p style="color: var(--primary-color);" class="text-sm">IIT Guwahati</p>
+                            <p class="text-sm text-text-muted">June 2025</p>
+                        </div>
+                        <div class="md:w-2/3">
+                            <ul class="list-disc list-inside text-text-color space-y-2 text-sm sm:text-base">
+                                <li>Explored Intelligent Reflecting Surface (IRS) technology in next-gen wireless systems.</li>
+                                <li>Studied Deep Reinforcement Learning (DRL) and its application in optimizing IRS performance.</li>
+                                <li>Researched secure wireless 5G communication using IRS for enhanced signal privacy and reliability.</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="md:w-2/3">
-                        <ul class="list-disc list-inside text-text-color space-y-2 text-sm sm:text-base">
-                            <li>Developed a fully responsive E-Commerce website using HTML, CSS, and JavaScript.</li>
-                            <li>Created a basic landing page.</li>
-                            <li>Focused on performance optimization and responsiveness.</li>
-                        </ul>
+                </div>
+                <div class="card">
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-8">
+                        <div class="md:w-1/3 flex-shrink-0">
+                            <h3 class="text-lg sm:text-xl font-bold">Web Developer Intern</h3>
+                            <p style="color: var(--primary-color);">Brainwave Matrix Solutions</p>
+                            <p class="text-sm text-text-muted">August 2024</p>
+                        </div>
+                        <div class="md:w-2/3">
+                            <ul class="list-disc list-inside text-text-color space-y-2 text-sm sm:text-base">
+                                <li>Developed a fully responsive E-Commerce website using HTML, CSS, and JavaScript.</li>
+                                <li>Created a basic landing page.</li>
+                                <li>Focused on performance optimization and responsiveness.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="py-20">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Featured <span style="color: var(--primary-color);">Projects</span></h2>
+        <section id="projects" class="py-16 sm:py-20">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Featured <span style="color: var(--deep-blue);">Projects</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">A selection of projects that showcase my skills.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card flex flex-col">
+                <div class="card flex flex-col items-center">
                     <img src="image copy.png" alt="Project One" class="rounded-lg mb-4 w-full h-48 object-cover">
                     <div class="flex flex-wrap justify-center gap-2 mb-4">
                         <span class="tag">HTML</span> <span class="tag">CSS</span> <span class="tag">JavaScript</span>
                     </div>
                     <h3 class="text-xl font-bold mb-2 text-center">E-Commerce Platform</h3>
                     <p class="text-text-muted flex-grow text-center text-sm">A frontend e-commerce site with features like product search, cart, and secure payments.</p>
-                    <a href="https://technamrata.github.io/Brainwave_Matrix_Intern_Task-2/" target="_blank" class="btn mt-6 mx-auto" role="button">
+                    <a href="https://technamrata.github.io/Brainwave_Matrix_Intern_Task-2/" target="_blank" class="btn mt-6" role="button">
                         <div id="container-stars"><div id="stars"></div></div>
                         <div id="glow"><div class="circle"></div><div class="circle"></div></div>
                         <strong>VIEW</strong>
                     </a>
                 </div>
-                 <div class="card flex flex-col">
+                 <div class="card flex flex-col items-center">
                     <img src="image.png" alt="Project Two" class="rounded-lg mb-4 w-full h-48 object-cover">
                     <div class="flex flex-wrap justify-center gap-2 mb-4">
                         <span class="tag">HTML</span> <span class="tag">CSS</span> <span class="tag">JS</span>
                     </div>
                     <h3 class="text-xl font-bold mb-2 text-center">Portfolio Website</h3>
                     <p class="text-text-muted flex-grow text-center text-sm">A personal portfolio website to showcase skills and projects, with interactive 3D animations.</p>
-                     <a href="#" target="_blank" class="btn mt-6 mx-auto" role="button">
+                     <a href="#" target="_blank" class="btn mt-6" role="button">
                         <div id="container-stars"><div id="stars"></div></div>
                         <div id="glow"><div class="circle"></div><div class="circle"></div></div>
                         <strong>VIEW</strong>
-                    </a>
+                     </a>
                 </div>
                 <!-- Add a third project here to balance the layout on large screens if desired -->
                  <div class="card flex-col hidden sm:flex lg:hidden">
-                    <!-- This is a placeholder to prevent a single card on tablet view. You can replace it with a real project -->
-                     <div class="w-full h-full flex items-center justify-center">
-                         <p class="text-text-muted">More projects coming soon...</p>
-                     </div>
+                     <!-- This is a placeholder to prevent a single card on tablet view. You can replace it with a real project -->
+                      <div class="w-full h-full flex items-center justify-center">
+                           <p class="text-text-muted">More projects coming soon...</p>
+                      </div>
                  </div>
             </div>
         </section>
 
         <!-- Education Section -->
-        <section id="education" class="py-20">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Academic <span style="color: var(--primary-color);">Background</span></h2>
+        <section id="education" class="py-16 sm:py-20">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Academic <span style="color: var(--deep-blue);">Background</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">My educational qualifications.</p>
             <div class="relative max-w-5xl mx-auto mt-12">
                 <div class="timeline">
@@ -495,7 +538,7 @@
                                 <img src="nit-silchar (1).jpg" alt="NIT Silchar Logo" class="w-12 h-12 rounded-full mt-1 bg-gray-700 object-cover flex-shrink-0">
                                 <div>
                                     <p class="text-sm text-text-muted">2023-2027</p>
-                                    <h3 class="text-md sm:text-lg font-bold">National Institute of Technology, Silchar</h3>
+                                    <h3 class="text-base sm:text-lg font-bold">National Institute of Technology, Silchar</h3>
                                     <p style="color: var(--primary-color);" class="text-sm">B.Tech, Electronics and Communication</p>
                                     <p class="text-sm text-text-muted mb-2">Grade: 7.9 CGPA</p>
                                 </div>
@@ -510,7 +553,7 @@
                                 <img src="kvd (1).jpg" alt="KV Logo" class="w-12 h-12 rounded-full mt-1 bg-gray-700 object-cover flex-shrink-0">
                                 <div>
                                     <p class="text-sm text-text-muted">July 2022</p>
-                                    <h3 class="text-md sm:text-lg font-bold">Kendriya Vidyalaya, IOC</h3>
+                                    <h3 class="text-base sm:text-lg font-bold">Kendriya Vidyalaya, IOC</h3>
                                     <p class="text-sm text-text-muted mb-2">Grade: 94.2%</p>
                                 </div>
                             </div>
@@ -524,7 +567,7 @@
                                 <img src="sfs.jpg" alt="SFS Logo" class="w-12 h-12 rounded-full mt-1 bg-gray-700 object-cover flex-shrink-0">
                                 <div>
                                     <p class="text-sm text-text-muted">August 2020</p>
-                                    <h3 class="text-md sm:text-lg font-bold">St. Francis DeSales School</h3>
+                                    <h3 class="text-base sm:text-lg font-bold">St. Francis DeSales School</h3>
                                     <p class="text-sm text-text-muted mb-2">Grade: 98.6%</p>
                                 </div>
                             </div>
@@ -536,17 +579,17 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Get In <span style="color: var(--primary-color);">Touch</span></h2>
+        <section id="contact" class="py-16 sm:py-20">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Get In <span style="color: var(--deep-blue);">Touch</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">I'm open to discussing new projects and opportunities. Let's connect!</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                 <div class="card order-2 md:order-1">
+            <div class="max-w-xl mx-auto w-full">
+                 <div class="card">
                      <h3 class="text-xl sm:text-2xl font-bold mb-6">Send a Message</h3>
                      <form id="contact-form">
                          <input type="text" name="name" placeholder="Your Name" class="w-full border rounded-lg px-4 py-3 mb-4 focus:ring-2 text-sm" required>
                          <input type="email" name="email" placeholder="Your Email" class="w-full border rounded-lg px-4 py-3 mb-4 focus:ring-2 text-sm" required>
                          <textarea name="message" placeholder="Message" rows="5" class="w-full border rounded-lg px-4 py-3 mb-4 focus:ring-2 text-sm" required></textarea>
-                         <button type="submit" class="btn w-full" role="button">
+                         <button type="submit" class="btn w-full">
                              <div id="container-stars"><div id="stars"></div></div>
                              <div id="glow"><div class="circle"></div><div class="circle"></div></div>
                              <strong>SEND</strong>
@@ -554,80 +597,162 @@
                      </form>
                      <div id="form-result" class="mt-4 text-center"></div>
                  </div>
-                 <div id="contact-animation" class="h-64 sm:h-80 md:h-full w-full order-1 md:order-2"></div>
             </div>
+            <div id="contact-animation" class="h-64 sm:h-80 w-full mt-12"></div>
         </section>
     </main>
 
-    <footer class="text-center py-4 text-text-muted bg-bg-color/50 border-t border-gray-700/30">
-        <p class="text-xs sm:text-sm">&copy; 2025 Namrata. All rights reserved.</p>
+    <footer class="text-center py-4 text-text-muted bg-bg-color/50">
+        <p class="text-xs sm:text-sm">&copy; 2024 Namrata. All rights reserved.</p>
     </footer>
 
     <script>
         lucide.createIcons();
         
-        const THEME = {
-            backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--bg-color'),
-            primaryColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-color'),
-        };
-
-        // Background Starfield Animation
-        let bgRenderer, bgCamera, bgScene;
+        // --- Masterclass Geometric Shapes Animation ---
         const bgCanvas = document.getElementById('bg-canvas');
         if (bgCanvas) {
-            bgScene = new THREE.Scene();
-            bgCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            bgRenderer = new THREE.WebGLRenderer({ canvas: bgCanvas, antialias: true, alpha: true });
-            bgRenderer.setSize(window.innerWidth, window.innerHeight);
-            bgCamera.position.z = 10;
-
-            const particlesCount = 5000;
-            const positions = new Float32Array(particlesCount * 3);
-            const geometry = new THREE.BufferGeometry();
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 50;
             
-            for (let i = 0; i < particlesCount; i++) {
-                const i3 = i * 3;
-                positions[i3] = (Math.random() - 0.5) * 100;
-                positions[i3 + 1] = (Math.random() - 0.5) * 100;
-                positions[i3 + 2] = (Math.random() - 0.5) * 100;
-            }
+            const renderer = new THREE.WebGLRenderer({ canvas: bgCanvas, antialias: true });
+            renderer.setClearColor(0x000000, 1);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const pointLight = new THREE.PointLight(0xffffff, 1.5);
+            pointLight.position.set(0, 0, 0);
+            scene.add(pointLight);
+
+            const shapesGroup = new THREE.Group();
+            const shapeCount = 250; 
+            const geometries = [
+                new THREE.IcosahedronGeometry(1, 0),
+                new THREE.TorusGeometry(1, 0.4, 16, 32),
+                new THREE.DodecahedronGeometry(1, 0)
+            ];
             
-            const material = new THREE.PointsMaterial({
-                size: 0.1,
-                color: THEME.primaryColor,
-                blending: THREE.AdditiveBlending,
+            const deepBlueColor = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--deep-blue').trim());
+            
+            const material = new THREE.MeshStandardMaterial({
+                color: deepBlueColor,
+                emissive: deepBlueColor,
+                emissiveIntensity: 0.6,
+                metalness: 0.8,
+                roughness: 0.1,
                 transparent: true,
                 opacity: 0.8
             });
-            const points = new THREE.Points(geometry, material);
-            bgScene.add(points);
+
+            const lines = [];
+
+            for (let i = 0; i < shapeCount; i++) {
+                const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+                const shape = new THREE.Mesh(geometry, material.clone());
+                
+                const positionRange = 120;
+                shape.position.set(
+                    (Math.random() - 0.5) * positionRange,
+                    (Math.random() - 0.5) * positionRange,
+                    (Math.random() - 0.5) * positionRange
+                );
+
+                shape.userData.rotationSpeed = new THREE.Vector3(
+                    (Math.random() - 0.5) * 0.02,
+                    (Math.random() - 0.5) * 0.02,
+                    (Math.random() - 0.5) * 0.02
+                );
+                
+                shape.userData.velocity = new THREE.Vector3(
+                     (Math.random() - 0.5) * 0.25,
+                     (Math.random() - 0.5) * 0.25,
+                     (Math.random() - 0.5) * 0.25
+                );
+
+                const scale = Math.random() * 1.5 + 0.5;
+                shape.scale.set(scale, scale, scale);
+                shapesGroup.add(shape);
+            }
+            scene.add(shapesGroup);
+            
+            // Connecting Lines
+            const lineMaterial = new THREE.LineBasicMaterial({
+                color: deepBlueColor,
+                transparent: true,
+                opacity: 0.1,
+                blending: THREE.AdditiveBlending
+            });
+            const lineGeometry = new THREE.BufferGeometry();
+            const linePositions = new Float32Array(shapeCount * shapeCount * 3);
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+            const connectingLines = new THREE.LineSegments(lineGeometry, lineMaterial);
+            scene.add(connectingLines);
+
 
             const mouse = new THREE.Vector2();
-            document.addEventListener('mousemove', (event) => {
+            window.addEventListener('mousemove', (event) => {
                 mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
                 mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
             });
-            
+
             const clock = new THREE.Clock();
-            function animateBg() {
-                requestAnimationFrame(animateBg);
-                const elapsedTime = clock.getElapsedTime();
+            function animate() {
+                requestAnimationFrame(animate);
+                const delta = clock.getDelta();
+
+                let lineIndex = 0;
+                const positions = connectingLines.geometry.attributes.position.array;
+
+                shapesGroup.children.forEach((shape, i) => {
+                    shape.rotation.x += shape.userData.rotationSpeed.x;
+                    shape.rotation.y += shape.userData.rotationSpeed.y;
+                    shape.rotation.z += shape.userData.rotationSpeed.z;
+
+                    shape.position.add(shape.userData.velocity);
+
+                    // Boundary check to loop shapes
+                    if (Math.abs(shape.position.x) > 150) shape.position.x *= -1;
+                    if (Math.abs(shape.position.y) > 150) shape.position.y *= -1;
+                    if (Math.abs(shape.position.z) > 150) shape.position.z *= -1;
+
+                    // Update connecting lines
+                    for (let j = i + 1; j < shapesGroup.children.length; j++) {
+                        const otherShape = shapesGroup.children[j];
+                        const dist = shape.position.distanceTo(otherShape.position);
+                        if (dist < 25) {
+                            positions[lineIndex++] = shape.position.x;
+                            positions[lineIndex++] = shape.position.y;
+                            positions[lineIndex++] = shape.position.z;
+                            positions[lineIndex++] = otherShape.position.x;
+                            positions[lineIndex++] = otherShape.position.y;
+                            positions[lineIndex++] = otherShape.position.z;
+                        }
+                    }
+                });
                 
-                points.rotation.y = elapsedTime * 0.05;
-                points.rotation.x = elapsedTime * 0.02;
+                // Trim the line geometry
+                connectingLines.geometry.setDrawRange(0, lineIndex / 3);
+                connectingLines.geometry.attributes.position.needsUpdate = true;
+                
+                // Camera rotation based on mouse
+                camera.position.x += (mouse.x * 20 - camera.position.x) * .05;
+                camera.position.y += (mouse.y * 20 - camera.position.y) * .05;
+                camera.lookAt(scene.position);
 
-                bgCamera.position.x += (mouse.x * 0.5 - bgCamera.position.x) * 0.02;
-                bgCamera.position.y += (-mouse.y * 0.5 - bgCamera.position.y) * 0.02;
-                bgCamera.lookAt(bgScene.position);
 
-                bgRenderer.render(bgScene, bgCamera);
+                renderer.render(scene, camera);
             }
-            animateBg();
+            animate();
+            
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
         }
-
-        // Contact Section 3D Animation
+        
+        // --- Contact Section 3D Animation ---
         let contactRenderer, contactCamera, contactScene;
         const contactContainer = document.getElementById('contact-animation');
         if(contactContainer){
@@ -640,9 +765,9 @@
             const geometry = new THREE.IcosahedronGeometry(8, 5); 
             geometry.userData.originalVertices = geometry.attributes.position.clone();
             const material = new THREE.MeshStandardMaterial({ 
-                color: THEME.primaryColor, 
+                color: getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim(), 
                 wireframe: true,
-                emissive: THEME.primaryColor,
+                emissive: getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim(),
                 emissiveIntensity: 0.3
             });
             const model = new THREE.Mesh(geometry, material);
@@ -683,11 +808,6 @@
         
         // --- Event Listeners and other scripts ---
         window.addEventListener('resize', () => {
-            if(bgCanvas && bgRenderer && bgCamera) {
-               bgCamera.aspect = window.innerWidth / window.innerHeight;
-               bgCamera.updateProjectionMatrix();
-               bgRenderer.setSize(window.innerWidth, window.innerHeight);
-            }
             if (contactContainer && contactRenderer && contactCamera && contactContainer.clientWidth > 0 && contactContainer.clientHeight > 0) {
                 contactCamera.aspect = contactContainer.clientWidth / contactContainer.clientHeight;
                 contactCamera.updateProjectionMatrix();
@@ -716,12 +836,12 @@
 
         const typewriterElement = document.getElementById('typewriter');
         if (typewriterElement) {
-            const words = ["a Tech & VLSI enthusiast", "a Public Speaker", "a Learner", "a Web Developer"];
+            const words = [" Tech & VLSI enthusiast", "a Public Speaker", "a Learner", "a Web Developer"];
             let wordIndex = 0, charIndex = 0, isDeleting = false;
             function type() {
                 const currentWord = words[wordIndex];
                 typewriterElement.textContent = currentWord.substring(0, charIndex);
-                typewriterElement.style.color = 'var(--primary-color)';
+                typewriterElement.style.color = 'var(--deep-blue)';
 
                 if (isDeleting) charIndex--; else charIndex++;
                 
