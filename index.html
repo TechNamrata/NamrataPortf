@@ -58,7 +58,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 13rem;
+            /* width: 13rem; <- Removed for flexible width */
             overflow: hidden;
             height: 3rem;
             background-size: 300% 300%;
@@ -195,6 +195,11 @@
             font-weight: 600;
             padding: 0.25rem 0.75rem;
             border-radius: 9999px;
+            transition: all 0.3s ease-in-out;
+        }
+        .tag:hover {
+            transform: scale(1.1);
+            background-color: rgba(0, 119, 255, 0.5);
         }
         
         .skill-item {
@@ -202,6 +207,7 @@
         }
         .skill-item:hover {
             border-color: rgba(0, 119, 255, 0.3);
+            transform: scale(1.05);
         }
         .skill-item img {
             @apply w-10 h-10 mb-1 filter grayscale brightness-75 transition-all duration-300;
@@ -335,6 +341,9 @@
                 max-width: 12rem;
                 height: 2.75rem;
             }
+            .btn.w-full {
+                max-width: none;
+            }
             .btn strong {
                 font-size: 11px;
             }
@@ -402,7 +411,7 @@
                     <p class="text-text-muted max-w-lg mx-auto md:mx-0 text-sm sm:text-base">
                         I'm an engineering student with a deep passion for technology, coding, and public speaking. I thrive on solving real-world problems, collaborating with others, and continuously exploring new ideas. Whether it’s building innovative solutions or communicating complex concepts clearly, I aim to make a meaningful impact in the tech community.
                     </p>
-                    <a href="https://drive.google.com/file/d/1xpaNEjed249numDqSBg3fKlgSPJSTKJk/view?usp=drive_link" target="_blank" class="btn mx-auto md:mx-0" role="button">
+                    <a href="https://drive.google.com/file/d/1xpaNEjed249numDqSBg3fKlgSPJSTKJk/view?usp=drive_link" target="_blank" class="btn mx-auto md:mx-0 w-52" role="button">
                         <div id="container-stars"><div id="stars"></div></div>
                         <div id="glow"><div class="circle"></div><div class="circle"></div></div>
                         <strong>CHECK CV</strong>
@@ -423,7 +432,7 @@
         <section id="skills" class="py-16 sm:py-20">
             <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">My <span style="color: var(--deep-blue);">Skills</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">A collection of technologies I use to bring ideas to life.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <div class="card">
                     <h3 class="text-xl sm:text-2xl font-bold mb-6 text-center">Frontend</h3>
                     <div class="grid grid-cols-3 gap-4 place-items-center">
@@ -448,7 +457,7 @@
         <section id="experience" class="py-16 sm:py-20">
             <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Professional <span style="color: var(--deep-blue);">Journey</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">My career path and key roles.</p>
-            <div class="max-w-4xl mx-auto flex flex-col gap-8">
+            <div class="max-w-4xl mx-auto flex flex-col gap-16">
                 <div class="card">
                     <div class="flex flex-col md:flex-row gap-4 md:gap-8">
                         <div class="md:w-1/3 flex-shrink-0">
@@ -488,7 +497,7 @@
         <section id="projects" class="py-16 sm:py-20">
             <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Featured <span style="color: var(--deep-blue);">Projects</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">A selection of projects that showcase my skills.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
                 <div class="card flex flex-col items-center">
                     <img src="image copy.png" alt="Project One" class="rounded-lg mb-4 w-full h-48 object-cover">
                     <div class="flex flex-wrap justify-center gap-2 mb-4">
@@ -496,7 +505,7 @@
                     </div>
                     <h3 class="text-xl font-bold mb-2 text-center">E-Commerce Platform</h3>
                     <p class="text-text-muted flex-grow text-center text-sm">A frontend e-commerce site with features like product search, cart, and secure payments.</p>
-                    <a href="https://technamrata.github.io/Brainwave_Matrix_Intern_Task-2/" target="_blank" class="btn mt-6" role="button">
+                    <a href="https://technamrata.github.io/Brainwave_Matrix_Intern_Task-2/" target="_blank" class="btn mt-6 w-52" role="button">
                         <div id="container-stars"><div id="stars"></div></div>
                         <div id="glow"><div class="circle"></div><div class="circle"></div></div>
                         <strong>VIEW</strong>
@@ -509,10 +518,10 @@
                     </div>
                     <h3 class="text-xl font-bold mb-2 text-center">Portfolio Website</h3>
                     <p class="text-text-muted flex-grow text-center text-sm">A personal portfolio website to showcase skills and projects, with interactive 3D animations.</p>
-                     <a href="#" target="_blank" class="btn mt-6" role="button">
-                        <div id="container-stars"><div id="stars"></div></div>
-                        <div id="glow"><div class="circle"></div><div class="circle"></div></div>
-                        <strong>VIEW</strong>
+                     <a href="#" target="_blank" class="btn mt-6 w-52" role="button">
+                         <div id="container-stars"><div id="stars"></div></div>
+                         <div id="glow"><div class="circle"></div><div class="circle"></div></div>
+                         <strong>VIEW</strong>
                      </a>
                 </div>
                 <!-- Add a third project here to balance the layout on large screens if desired -->
@@ -531,7 +540,7 @@
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">My educational qualifications.</p>
             <div class="relative max-w-5xl mx-auto mt-12">
                 <div class="timeline">
-                    <div class="timeline-item">
+                    <div class="timeline-item mb-16">
                         <div class="timeline-icon"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
                         <div class="card">
                             <div class="flex items-start gap-4">
@@ -546,7 +555,7 @@
                             <p class="text-text-color mt-4 text-sm sm:text-base">Currently pursuing my B.Tech degree, focusing on core electronics and communication principles while exploring interests in web development and VLSI.</p>
                         </div>
                     </div>
-                    <div class="timeline-item">
+                    <div class="timeline-item mb-16">
                         <div class="timeline-icon"><i data-lucide="school" class="w-5 h-5"></i></div>
                          <div class="card">
                             <div class="flex items-start gap-4">
