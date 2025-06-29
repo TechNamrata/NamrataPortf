@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Namrata - Portfolio</title>
+    <title>Friend's Name - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* --- THEME: Pure Black & Blue --- */
+        /* --- THEME: Deepest Blue (Adjusted) --- */
         :root {
             --bg-color: #000000;
-            --primary-color: #0077ff;
-            --deep-blue: #0077ff;
-            --primary-color-glow: rgba(0, 119, 255, 0.5);
+            --primary-color: #1e40af;      /* SLIGHTLY LIGHTER: Blue-800 */
+            --primary-color-glow: rgba(30, 64, 175, 0.6); /* Corresponds to Blue-800 */
             --secondary-color: #1a1a1a;
             --secondary-color-glow: rgba(26, 26, 26, 0.8);
-            --accent-color: #003366;
+            --accent-color: #1e3a8a;       /* DEEPEST: Blue-900 */
             --text-color: #eaeaea;
             --text-muted: #a9a9a9;
         }
@@ -39,158 +38,75 @@
         .card {
             background-color: rgba(26, 26, 26, 0.4);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 51, 102, 0.5);
+            border: 1px solid rgba(30, 58, 138, 0.5); /* Blue-900 with opacity */
             @apply rounded-2xl p-6 transition-all duration-300;
         }
         .card:hover {
-             box-shadow: 0 0 25px 0 rgba(0, 119, 255, 0.2);
-             border-color: rgba(0, 119, 255, 0.5);
+             transform: translateY(-5px);
+             box-shadow: 0 0 30px 5px var(--primary-color-glow); /* Enhanced glow */
+             border-color: var(--primary-color); /* Full color border on hover */
         }
+        /* --- UPDATED: Nav Link Hover Effect --- */
         .nav-link {
-            @apply text-gray-300 hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-primary-color after:left-0 after:bottom-[-5px] after:transition-all after:duration-300;
+            @apply text-gray-300 hover:text-white transition-all duration-300 rounded-md px-3 py-1;
         }
-        .nav-link:hover::after {
-            @apply w-full;
+        .nav-link:hover {
+            background-color: var(--accent-color);
+            box-shadow: 0 0 15px 0 var(--primary-color-glow);
         }
         
-        /* --- Starfield Button Style --- */
+        @property --angle {
+          syntax: '<angle>';
+          initial-value: 0deg;
+          inherits: false;
+        }
+
         .btn {
-            display: flex;
+            position: relative;
+            border: 2px solid transparent;
+            background-color: var(--secondary-color);
+            background-clip: padding-box;
+            border-radius: 9999px; /* Fully rounded */
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex; 
             justify-content: center;
             align-items: center;
-            /* width: 13rem; <- Removed for flexible width */
-            overflow: hidden;
-            height: 3rem;
-            background-size: 300% 300%;
-            cursor: pointer;
-            backdrop-filter: blur(1rem);
-            border-radius: 5rem;
-            transition: 0.5s;
-            animation: gradient_301 5s ease infinite;
-            border: double 4px transparent;
-            background-image: linear-gradient(var(--secondary-color), var(--secondary-color)),
-                              linear-gradient(137.48deg, #00BFFF 10%, #0077ff 45%, #003366 87%);
-            background-origin: border-box;
-            background-clip: content-box, border-box;
+            text-decoration: none;
         }
-
-        #container-stars {
+        
+        .btn::before {
+            content: '';
             position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
             z-index: -1;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            transition: 0.5s;
-            backdrop-filter: blur(1rem);
-            border-radius: 5rem;
+            margin: -2px; /* Border width */
+            border-radius: inherit; /* Inherit border-radius */
+            background: conic-gradient(from var(--angle), var(--accent-color), #1d4ed8, #3b82f6, #1d4ed8, var(--accent-color));
+            animation: spin 5s linear infinite;
         }
 
-        .btn strong {
-            z-index: 2;
-            font-size: 12px;
-            letter-spacing: 5px;
-            color: #ffffff;
-            text-shadow: 0 0 4px white;
-        }
-
-        #glow {
-            position: absolute;
-            display: flex;
-            width: 12rem;
-        }
-
-        .circle {
-            width: 100%;
-            height: 30px;
-            filter: blur(2rem);
-            animation: pulse_3011 4s infinite;
-            z-index: -1;
-        }
-
-        .circle:nth-of-type(1) {
-            background: var(--primary-color-glow);
-        }
-
-        .circle:nth-of-type(2) {
-            background: var(--primary-color-glow);
-        }
-
-        .btn:hover #container-stars {
-            z-index: 1;
-            background-color: var(--secondary-color);
+        .btn:hover::before {
+            animation-duration: 3s;
         }
 
         .btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px 0 var(--primary-color-glow);
         }
 
-        .btn:active {
-            border: double 4px var(--primary-color);
-            background-origin: border-box;
-            background-clip: content-box, border-box;
-            animation: none;
-        }
-
-        .btn:active .circle {
-            background: var(--primary-color);
-        }
-
-        #stars {
-            position: relative;
-            background: transparent;
-            width: 200rem;
-            height: 200rem;
-        }
-
-        #stars::after, #stars::before {
-            content: "";
-            position: absolute;
-            background-image: radial-gradient(var(--primary-color) 1px, transparent 1%);
-            background-size: 50px 50px;
-        }
-
-        #stars::after {
-            top: -10rem;
-            left: -100rem;
-            width: 100%;
-            height: 100%;
-            animation: animStarRotate 90s linear infinite;
-        }
-
-        #stars::before {
-            top: 0;
-            left: -50%;
-            width: 170%;
-            height: 500%;
-            animation: animStar 60s linear infinite;
-            opacity: 0.5;
-        }
-
-        @keyframes animStar {
-            from { transform: translateY(0); }
-            to { transform: translateY(-135rem); }
-        }
-
-        @keyframes animStarRotate {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0); }
-        }
-
-        @keyframes gradient_301 {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes pulse_3011 {
-            0% { transform: scale(0.75); box-shadow: 0 0 0 0 var(--primary-color-glow); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0,0,0,0); }
-            100% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+        @keyframes spin {
+          to {
+            --angle: 360deg;
+          }
         }
 
         .tag {
-            background-color: rgba(0, 119, 255, 0.2);
-            color: #87ceeb;
+            background-color: rgba(30, 64, 175, 0.2); 
+            color: #93c5fd; 
             font-size: 0.75rem;
             font-weight: 600;
             padding: 0.25rem 0.75rem;
@@ -199,14 +115,14 @@
         }
         .tag:hover {
             transform: scale(1.1);
-            background-color: rgba(0, 119, 255, 0.5);
+            background-color: rgba(30, 64, 175, 0.5);
         }
         
         .skill-item {
             @apply flex flex-col items-center justify-center gap-2 text-center border border-accent-color/60 bg-secondary-color/60 rounded-lg transition-all duration-300 hover:bg-accent-color/80 w-full h-full p-4;
         }
         .skill-item:hover {
-            border-color: rgba(0, 119, 255, 0.3);
+            border-color: var(--primary-color-glow);
             transform: scale(1.05);
         }
         .skill-item img {
@@ -219,24 +135,22 @@
             @apply text-sm text-text-muted transition-colors duration-300;
         }
          .skill-item:hover span {
-             color: var(--text-color);
+            color: var(--text-color);
          }
         
-        /* --- Profile Photo Blinking Effect --- */
         .profile-image-container {
             animation: blink-effect 3s infinite ease-in-out;
         }
 
         @keyframes blink-effect {
             0%, 100% {
-                box-shadow: 0 0 30px 5px rgba(0, 119, 255, 0.2);
+                box-shadow: 0 0 30px 5px var(--primary-color-glow);
             }
             50% {
-                box-shadow: 0 0 60px 20px rgba(0, 119, 255, 0.5);
+                box-shadow: 0 0 60px 20px var(--primary-color-glow);
             }
         }
 
-        /* --- Timeline Style --- */
         .timeline::before {
             content: '';
             position: absolute;
@@ -285,7 +199,6 @@
             left: -20px;
         }
 
-        /* Themed Contact Form */
         #contact-form input, #contact-form textarea {
             background-color: var(--secondary-color-glow);
             border-color: var(--accent-color);
@@ -297,21 +210,8 @@
             border-color: var(--primary-color);
         }
 
-        /* --- RESPONSIVE ADJUSTMENTS --- */
-        @media (max-width: 640px) {
-            body {
-                font-size: 14px;
-            }
-            main.container {
-                @apply pt-20 pb-16 px-4;
-            }
-            section {
-                @apply py-16;
-            }
-            .card {
-                @apply p-4;
-            }
-            .timeline::before {
+        @media (max-width: 767px) { 
+             .timeline::before {
                 left: 20px;
             }
             .timeline-item,
@@ -327,6 +227,21 @@
                 left: 0 !important;
                 right: auto !important;
             }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                font-size: 14px;
+            }
+            main.container {
+                @apply pt-20 pb-16 px-4;
+            }
+            section {
+                @apply py-16;
+            }
+            .card {
+                @apply p-4;
+            }
             .skill-item {
                 @apply w-24 h-24 p-2;
             }
@@ -337,20 +252,12 @@
                 @apply text-xs;
             }
             .btn {
-                width: 100%;
-                max-width: 12rem;
-                height: 2.75rem;
+                padding: 0.6rem 1.2rem;
             }
-            .btn.w-full {
-                max-width: none;
-            }
-            .btn strong {
-                font-size: 11px;
-            }
-            h1 { font-size: 2.25rem; } /* ~36px */
-            h2 { font-size: 1.25rem; } /* ~20px */
-            h3 { font-size: 1.125rem; } /* ~18px */
-            p, li { font-size: 0.875rem; } /* 14px */
+            h1 { font-size: 2.25rem; line-height: 1.2; }
+            h2 { font-size: 1.25rem; }
+            h3 { font-size: 1.125rem; }
+            p, li { font-size: 0.875rem; }
         }
     </style>
 </head>
@@ -361,27 +268,27 @@
     <header class="fixed top-0 left-0 right-0 z-50 bg-bg-color/50 backdrop-blur-md">
         <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-xl sm:text-2xl font-bold flex items-center gap-2 tracking-wider">
-                <i data-lucide="code" style="color: var(--deep-blue);"></i>
+                <i data-lucide="code-xml" style="color: var(--primary-color);"></i>
                 <span>Portfolio</span>
             </a>
             <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
-                <a href="#about" class="nav-link text-sm">About</a>
-                <a href="#skills" class="nav-link text-sm">Skills</a>
-                <a href="#experience" class="nav-link text-sm">Experience</a>
-                <a href="#projects" class="nav-link text-sm">Projects</a>
-                <a href="#education" class="nav-link text-sm">Education</a>
-                <a href="#contact" class="nav-link text-sm">Contact</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#education" class="nav-link">Education</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </div>
             <div class="hidden md:flex items-center gap-4">
                  <a href="https://github.com/TechNamrata" target="_blank" class="flex items-center gap-2 bg-secondary-color hover:bg-accent-color px-4 py-2 rounded-lg transition-colors text-sm">
-                     <i data-lucide="github" class="w-4 h-4"></i> Github
+                      <i data-lucide="github" class="w-4 h-4"></i> Github
                  </a>
             </div>
             <button id="menu-btn" class="md:hidden">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </nav>
-        <!-- Mobile Menu (Dropdown Style) -->
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-bg-color/90 backdrop-blur-xl">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#about" class="block py-3 px-6 text-center nav-link">About</a>
@@ -405,24 +312,22 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                 <div class="space-y-6 order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left">
                     <h1 class="text-4xl sm:text-5xl font-bold leading-tight">
-                        Hi, I'm <span style="color: var(--deep-blue);">Namrata Nayak</span>
+                        Hi, I'm<br class="sm:hidden"> <span style="color: var(--primary-color);">Namrata Nayak</span>
                     </h1>
                     <h2 class="text-xl sm:text-2xl font-medium text-text-muted">A <span id="typewriter"></span></h2>
                     <p class="text-text-muted max-w-lg mx-auto md:mx-0 text-sm sm:text-base">
                         I'm an engineering student with a deep passion for technology, coding, and public speaking. I thrive on solving real-world problems, collaborating with others, and continuously exploring new ideas. Whether it’s building innovative solutions or communicating complex concepts clearly, I aim to make a meaningful impact in the tech community.
                     </p>
-                    <a href="https://drive.google.com/file/d/1xpaNEjed249numDqSBg3fKlgSPJSTKJk/view?usp=drive_link" target="_blank" class="btn mx-auto md:mx-0 w-52" role="button">
-                        <div id="container-stars"><div id="stars"></div></div>
-                        <div id="glow"><div class="circle"></div><div class="circle"></div></div>
-                        <strong>CHECK CV</strong>
+                    <a href="https://drive.google.com/file/d/1xpaNEjed249numDqSBg3fKlgSPJSTKJk/view" class="btn mx-auto md:mx-0" role="button">
+                        Check CV
                     </a>
                 </div>
                 <div class="relative flex justify-center items-center order-1 md:order-2">
-                     <div class="w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full profile-image-container flex items-center justify-center p-2" style="background: radial-gradient(circle, var(--primary-color) 0%, rgba(0,0,0,0) 70%);">
-                         <img src="image (3).png" 
-                              alt="Namrata" 
-                              class="w-full h-full rounded-full object-cover bg-bg-color"
-                              onerror="this.onerror=null;this.src='https://placehold.co/400x400/000000/eaeaea?text=N';">
+                     <div class="w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full profile-image-container flex items-center justify-center p-2" style="background-color: var(--primary-color);">
+                          <img src="image (3).png" 
+                                 alt="Friend's Name" 
+                                 class="w-full h-full rounded-full object-cover bg-bg-color"
+                                 onerror="this.onerror=null;this.src='https://placehold.co/400x400/000000/eaeaea?text=Friend';">
                      </div>
                 </div>
             </div>
@@ -430,24 +335,29 @@
 
         <!-- Skills Section -->
         <section id="skills" class="py-16 sm:py-20">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">My <span style="color: var(--deep-blue);">Skills</span></h2>
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">My <span style="color: var(--primary-color);">Skills</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">A collection of technologies I use to bring ideas to life.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-                <div class="card">
+            <!-- Increased gap from 8 to 12 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
+                <div class="card p-4 sm:p-6 rounded-2xl transition-all duration-300">
                     <h3 class="text-xl sm:text-2xl font-bold mb-6 text-center">Frontend</h3>
-                    <div class="grid grid-cols-3 gap-4 place-items-center">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 place-items-center">
                         <div class="skill-item"><img src="htmlll-removebg-preview (1).png" alt="HTML5"><span>HTML5</span></div>
                         <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3"><span>CSS3</span></div>
                         <div class="skill-item"><img src="JavaScript-logo (1) (1).png" alt="JavaScript"><span>JavaScript</span></div>
+                        
                     </div>
                 </div>
-                <div class="card">
-                    <h3 class="text-xl sm:text-2xl font-bold mb-6 text-center">Language and Services</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 place-items-center">
+
+                 <div class="card p-4 sm:p-6 rounded-2xl transition-all duration-300">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-6 text-center">Language</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 place-items-center">
                         <div class="skill-item"><img src="clogo (1) (1).jpg" alt="C"><span>C</span></div>
                         <div class="skill-item"><img src="cpplogo (1) (1).jpg" alt="C++"><span>C++</span></div>
+                       
+                        <div class="skill-item"><img src="JavaScript-logo (1) (1).png" alt="JavaScript"><span>JavaScript</span></div>
+                        <div class="skill-item"><img src="glwnyr790oabfx6jv7b7 (1).png" alt="MatLAB"><span>MatLAB</span></div>
                         <div class="skill-item"><img src="dm5tyzxel680kvsnrvct (1).png" alt="Arduino"><span>Arduino</span></div>
-                         <div class="skill-item"><img src="glwnyr790oabfx6jv7b7 (1).png" alt="Matlab"><span>MatLAB</span></div>
                     </div>
                 </div>
             </div>
@@ -455,14 +365,15 @@
         
         <!-- Experience Section -->
         <section id="experience" class="py-16 sm:py-20">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Professional <span style="color: var(--deep-blue);">Journey</span></h2>
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Professional <span style="color: var(--primary-color);">Journey</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">My career path and key roles.</p>
-            <div class="max-w-4xl mx-auto flex flex-col gap-16">
-                <div class="card">
+            <!-- Increased gap from 8 to 12 -->
+            <div class="max-w-4xl mx-auto flex flex-col gap-12">
+                <div class="card p-4 sm:p-6 rounded-2xl transition-all duration-300">
                     <div class="flex flex-col md:flex-row gap-4 md:gap-8">
                         <div class="md:w-1/3 flex-shrink-0">
                             <h3 class="text-lg sm:text-xl font-bold">Summer Research Intern</h3>
-                            <p style="color: var(--primary-color);" class="text-sm">IIT Guwahati</p>
+                            <p style="color: var(--primary-color);">IIT Guwahati</p>
                             <p class="text-sm text-text-muted">June 2025</p>
                         </div>
                         <div class="md:w-2/3">
@@ -474,7 +385,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card p-4 sm:p-6 rounded-2xl transition-all duration-300">
                     <div class="flex flex-col md:flex-row gap-4 md:gap-8">
                         <div class="md:w-1/3 flex-shrink-0">
                             <h3 class="text-lg sm:text-xl font-bold">Web Developer Intern</h3>
@@ -495,54 +406,45 @@
 
         <!-- Projects Section -->
         <section id="projects" class="py-16 sm:py-20">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Featured <span style="color: var(--deep-blue);">Projects</span></h2>
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Featured <span style="color: var(--primary-color);">Projects</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">A selection of projects that showcase my skills.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
-                <div class="card flex flex-col items-center">
+            <!-- Increased gap from 8 to 12 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-12">
+                <div class="card flex flex-col items-center p-4 sm:p-6 rounded-2xl transition-all duration-300">
                     <img src="image copy.png" alt="Project One" class="rounded-lg mb-4 w-full h-48 object-cover">
                     <div class="flex flex-wrap justify-center gap-2 mb-4">
                         <span class="tag">HTML</span> <span class="tag">CSS</span> <span class="tag">JavaScript</span>
                     </div>
                     <h3 class="text-xl font-bold mb-2 text-center">E-Commerce Platform</h3>
                     <p class="text-text-muted flex-grow text-center text-sm">A frontend e-commerce site with features like product search, cart, and secure payments.</p>
-                    <a href="https://technamrata.github.io/Brainwave_Matrix_Intern_Task-2/" target="_blank" class="btn mt-6 w-52" role="button">
-                        <div id="container-stars"><div id="stars"></div></div>
-                        <div id="glow"><div class="circle"></div><div class="circle"></div></div>
-                        <strong>VIEW</strong>
+                    <a href="https://technamrata.github.io/Brainwave_Matrix_Intern_Task-2/" target="_blank" class="btn mt-6" role="button">
+                        VIEW
                     </a>
                 </div>
-                 <div class="card flex flex-col items-center">
+                 <div class="card flex flex-col items-center p-4 sm:p-6 rounded-2xl transition-all duration-300">
                     <img src="image.png" alt="Project Two" class="rounded-lg mb-4 w-full h-48 object-cover">
                     <div class="flex flex-wrap justify-center gap-2 mb-4">
-                        <span class="tag">HTML</span> <span class="tag">CSS</span> <span class="tag">JS</span>
+                        <span class="tag">HTML</span> <span class="tag">CSS</span> <span class="tag">JavaScript</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 text-center">Portfolio Website</h3>
-                    <p class="text-text-muted flex-grow text-center text-sm">A personal portfolio website to showcase skills and projects, with interactive 3D animations.</p>
-                     <a href="#" target="_blank" class="btn mt-6 w-52" role="button">
-                         <div id="container-stars"><div id="stars"></div></div>
-                         <div id="glow"><div class="circle"></div><div class="circle"></div></div>
-                         <strong>VIEW</strong>
-                     </a>
+                    <h3 class="text-xl font-bold mb-2 text-center">My Portfolio Website</h3>
+                    <p class="text-text-muted flex-grow text-center text-sm">Created my Interactive Portfolio</p>
+                      <a href="#" target="_blank" class="btn mt-6" role="button">
+                           VIEW
+                      </a>
                 </div>
-                <!-- Add a third project here to balance the layout on large screens if desired -->
-                 <div class="card flex-col hidden sm:flex lg:hidden">
-                     <!-- This is a placeholder to prevent a single card on tablet view. You can replace it with a real project -->
-                      <div class="w-full h-full flex items-center justify-center">
-                           <p class="text-text-muted">More projects coming soon...</p>
-                      </div>
-                 </div>
             </div>
         </section>
 
         <!-- Education Section -->
         <section id="education" class="py-16 sm:py-20">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Academic <span style="color: var(--deep-blue);">Background</span></h2>
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Academic <span style="color: var(--primary-color);">Background</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">My educational qualifications.</p>
             <div class="relative max-w-5xl mx-auto mt-12">
                 <div class="timeline">
-                    <div class="timeline-item mb-16">
+                    <!-- Increased margin-bottom from 16 to 20 -->
+                    <div class="timeline-item mb-20">
                         <div class="timeline-icon"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
-                        <div class="card">
+                        <div class="card p-4 sm:p-6 rounded-2xl transition-all duration-300">
                             <div class="flex items-start gap-4">
                                 <img src="nit-silchar (1).jpg" alt="NIT Silchar Logo" class="w-12 h-12 rounded-full mt-1 bg-gray-700 object-cover flex-shrink-0">
                                 <div>
@@ -555,53 +457,55 @@
                             <p class="text-text-color mt-4 text-sm sm:text-base">Currently pursuing my B.Tech degree, focusing on core electronics and communication principles while exploring interests in web development and VLSI.</p>
                         </div>
                     </div>
-                    <div class="timeline-item mb-16">
+                    <!-- Increased margin-bottom from 16 to 20 -->
+                    <div class="timeline-item mb-20">
                         <div class="timeline-icon"><i data-lucide="school" class="w-5 h-5"></i></div>
-                         <div class="card">
+                         <div class="card p-4 sm:p-6 rounded-2xl transition-all duration-300">
                             <div class="flex items-start gap-4">
-                                <img src="kvd (1).jpg" alt="KV Logo" class="w-12 h-12 rounded-full mt-1 bg-gray-700 object-cover flex-shrink-0">
+                                <img src="kvd (1).jpg" alt="KV IOC Logo" class="w-12 h-12 rounded-full mt-1 bg-gray-700 object-cover flex-shrink-0">
                                 <div>
                                     <p class="text-sm text-text-muted">July 2022</p>
                                     <h3 class="text-base sm:text-lg font-bold">Kendriya Vidyalaya, IOC</h3>
                                     <p class="text-sm text-text-muted mb-2">Grade: 94.2%</p>
                                 </div>
                             </div>
-                             <p class="text-text-color mt-4 text-sm sm:text-base">Completed my class 12 high school education, specializing in the science stream with a focus on Physics, Chemistry, and Mathematics.</p>
+                               <p class="text-text-color mt-4 text-sm sm:text-base">Completed my class 12 high school education, specializing in the science stream with a focus on Physics, Chemistry, and Mathematics.</p>
                          </div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-icon"><i data-lucide="building" class="w-5 h-5"></i></div>
-                         <div class="card">
+                         <div class="card p-4 sm:p-6 rounded-2xl transition-all duration-300">
                             <div class="flex items-start gap-4">
-                                <img src="sfs.jpg" alt="SFS Logo" class="w-12 h-12 rounded-full mt-1 bg-gray-700 object-cover flex-shrink-0">
+                                <img src="sfs.jpg" alt="St. Francis DeSales School Logo" class="w-12 h-12 rounded-full mt-1 bg-gray-700 object-cover flex-shrink-0">
                                 <div>
                                     <p class="text-sm text-text-muted">August 2020</p>
                                     <h3 class="text-base sm:text-lg font-bold">St. Francis DeSales School</h3>
                                     <p class="text-sm text-text-muted mb-2">Grade: 98.6%</p>
                                 </div>
                             </div>
-                            <p class="text-text-color mt-4 text-sm sm:text-base">Completed my class 10 education, receiving a comprehensive academic foundation that fostered my interest in science and technology.</p>
+                               <p class="text-text-color mt-4 text-sm sm:text-base">Completed my class 10th education, receiving a comprehensive academic foundation that fostered my interest in science and technology.</p>
                          </div>
                     </div>
                 </div>
             </div>
         </section>
 
+
         <!-- Contact Section -->
         <section id="contact" class="py-16 sm:py-20">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Get In <span style="color: var(--deep-blue);">Touch</span></h2>
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Get In <span style="color: var(--primary-color);">Touch</span></h2>
             <p class="text-center text-text-muted mb-12 max-w-2xl mx-auto text-sm sm:text-base">I'm open to discussing new projects and opportunities. Let's connect!</p>
             <div class="max-w-xl mx-auto w-full">
-                 <div class="card">
+                 <div class="card p-4 sm:p-6 rounded-2xl transition-all duration-300">
                      <h3 class="text-xl sm:text-2xl font-bold mb-6">Send a Message</h3>
                      <form id="contact-form">
+                         <!-- Replace with your friend's Web3Forms access key -->
+                         <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
                          <input type="text" name="name" placeholder="Your Name" class="w-full border rounded-lg px-4 py-3 mb-4 focus:ring-2 text-sm" required>
                          <input type="email" name="email" placeholder="Your Email" class="w-full border rounded-lg px-4 py-3 mb-4 focus:ring-2 text-sm" required>
                          <textarea name="message" placeholder="Message" rows="5" class="w-full border rounded-lg px-4 py-3 mb-4 focus:ring-2 text-sm" required></textarea>
                          <button type="submit" class="btn w-full">
-                             <div id="container-stars"><div id="stars"></div></div>
-                             <div id="glow"><div class="circle"></div><div class="circle"></div></div>
-                             <strong>SEND</strong>
+                             SEND
                          </button>
                      </form>
                      <div id="form-result" class="mt-4 text-center"></div>
@@ -612,157 +516,135 @@
     </main>
 
     <footer class="text-center py-4 text-text-muted bg-bg-color/50">
-        <p class="text-xs sm:text-sm">&copy; 2024 Namrata. All rights reserved.</p>
+        <p class="text-xs sm:text-sm">&copy; 2025 Namrata Nayak. All rights reserved.</p>
     </footer>
 
     <script>
         lucide.createIcons();
         
-        // --- Masterclass Geometric Shapes Animation ---
+        // --- Plexus Background Animation ---
         const bgCanvas = document.getElementById('bg-canvas');
         if (bgCanvas) {
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 50;
-            
-            const renderer = new THREE.WebGLRenderer({ canvas: bgCanvas, antialias: true });
-            renderer.setClearColor(0x000000, 1);
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            let scene, camera, renderer, particles, lines;
+            const particleCount = 500; 
+            const connectionDistance = 1.5;
+            const particlePositions = new Float32Array(particleCount * 3);
+            const particleVelocities = [];
 
-            const pointLight = new THREE.PointLight(0xffffff, 1.5);
-            pointLight.position.set(0, 0, 0);
-            scene.add(pointLight);
+            const createCircleTexture = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 64;
+                canvas.height = 64;
+                const context = canvas.getContext('2d');
+                context.beginPath();
+                context.arc(32, 32, 30, 0, 2 * Math.PI);
+                context.fillStyle = 'white';
+                context.fill();
+                return new THREE.CanvasTexture(canvas);
+            };
 
-            const shapesGroup = new THREE.Group();
-            const shapeCount = 250; 
-            const geometries = [
-                new THREE.IcosahedronGeometry(1, 0),
-                new THREE.TorusGeometry(1, 0.4, 16, 32),
-                new THREE.DodecahedronGeometry(1, 0)
-            ];
-            
-            const deepBlueColor = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--deep-blue').trim());
-            
-            const material = new THREE.MeshStandardMaterial({
-                color: deepBlueColor,
-                emissive: deepBlueColor,
-                emissiveIntensity: 0.6,
-                metalness: 0.8,
-                roughness: 0.1,
-                transparent: true,
-                opacity: 0.8
-            });
+            const init = () => {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 5;
 
-            const lines = [];
+                renderer = new THREE.WebGLRenderer({ canvas: bgCanvas, antialias: true });
+                renderer.setClearColor(0x000000, 1);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            for (let i = 0; i < shapeCount; i++) {
-                const geometry = geometries[Math.floor(Math.random() * geometries.length)];
-                const shape = new THREE.Mesh(geometry, material.clone());
+                const primaryColor = new THREE.Color(0x1e3a8a); // Keep particles the deepest blue
+                const circleTexture = createCircleTexture();
+
+                const particlesGeometry = new THREE.BufferGeometry();
+                for (let i = 0; i < particleCount; i++) {
+                    const i3 = i * 3;
+                    particlePositions[i3] = (Math.random() - 0.5) * 10;
+                    particlePositions[i3 + 1] = (Math.random() - 0.5) * 10;
+                    particlePositions[i3 + 2] = (Math.random() - 0.5) * 10;
+                    particleVelocities.push(new THREE.Vector3((Math.random() - 0.5) * 0.01, (Math.random() - 0.5) * 0.01, (Math.random() - 0.5) * 0.01));
+                }
+                particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
                 
-                const positionRange = 120;
-                shape.position.set(
-                    (Math.random() - 0.5) * positionRange,
-                    (Math.random() - 0.5) * positionRange,
-                    (Math.random() - 0.5) * positionRange
-                );
+                const particlesMaterial = new THREE.PointsMaterial({
+                    color: primaryColor,
+                    size: 0.08,
+                    map: circleTexture,
+                    transparent: true,
+                    alphaTest: 0.5,
+                    blending: THREE.AdditiveBlending
+                });
+                particles = new THREE.Points(particlesGeometry, particlesMaterial);
+                scene.add(particles);
 
-                shape.userData.rotationSpeed = new THREE.Vector3(
-                    (Math.random() - 0.5) * 0.02,
-                    (Math.random() - 0.5) * 0.02,
-                    (Math.random() - 0.5) * 0.02
-                );
-                
-                shape.userData.velocity = new THREE.Vector3(
-                     (Math.random() - 0.5) * 0.25,
-                     (Math.random() - 0.5) * 0.25,
-                     (Math.random() - 0.5) * 0.25
-                );
+                const lineGeometry = new THREE.BufferGeometry();
+                const lineMaterial = new THREE.LineBasicMaterial({
+                    color: primaryColor,
+                    transparent: true,
+                    opacity: 0.2
+                });
+                lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+                scene.add(lines);
 
-                const scale = Math.random() * 1.5 + 0.5;
-                shape.scale.set(scale, scale, scale);
-                shapesGroup.add(shape);
-            }
-            scene.add(shapesGroup);
+                window.addEventListener('resize', onWindowResize, false);
+            };
+
+            const onWindowResize = () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            };
             
-            // Connecting Lines
-            const lineMaterial = new THREE.LineBasicMaterial({
-                color: deepBlueColor,
-                transparent: true,
-                opacity: 0.1,
-                blending: THREE.AdditiveBlending
-            });
-            const lineGeometry = new THREE.BufferGeometry();
-            const linePositions = new Float32Array(shapeCount * shapeCount * 3);
-            lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-            const connectingLines = new THREE.LineSegments(lineGeometry, lineMaterial);
-            scene.add(connectingLines);
-
-
+            const clock = new THREE.Clock();
             const mouse = new THREE.Vector2();
             window.addEventListener('mousemove', (event) => {
                 mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
                 mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
             });
 
-            const clock = new THREE.Clock();
-            function animate() {
+            const animate = () => {
                 requestAnimationFrame(animate);
-                const delta = clock.getDelta();
+                const linePositions = [];
+                const positions = particles.geometry.attributes.position;
 
-                let lineIndex = 0;
-                const positions = connectingLines.geometry.attributes.position.array;
+                for (let i = 0; i < particleCount; i++) {
+                    positions.setX(i, positions.getX(i) + particleVelocities[i].x);
+                    positions.setY(i, positions.getY(i) + particleVelocities[i].y);
+                    positions.setZ(i, positions.getZ(i) + particleVelocities[i].z);
 
-                shapesGroup.children.forEach((shape, i) => {
-                    shape.rotation.x += shape.userData.rotationSpeed.x;
-                    shape.rotation.y += shape.userData.rotationSpeed.y;
-                    shape.rotation.z += shape.userData.rotationSpeed.z;
+                    if (Math.abs(positions.getX(i)) > 5) particleVelocities[i].x *= -1;
+                    if (Math.abs(positions.getY(i)) > 5) particleVelocities[i].y *= -1;
+                    if (Math.abs(positions.getZ(i)) > 5) particleVelocities[i].z *= -1;
 
-                    shape.position.add(shape.userData.velocity);
+                    for (let j = i + 1; j < particleCount; j++) {
+                        const dx = positions.getX(i) - positions.getX(j);
+                        const dy = positions.getY(i) - positions.getY(j);
+                        const dz = positions.getZ(i) - positions.getZ(j);
+                        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-                    // Boundary check to loop shapes
-                    if (Math.abs(shape.position.x) > 150) shape.position.x *= -1;
-                    if (Math.abs(shape.position.y) > 150) shape.position.y *= -1;
-                    if (Math.abs(shape.position.z) > 150) shape.position.z *= -1;
-
-                    // Update connecting lines
-                    for (let j = i + 1; j < shapesGroup.children.length; j++) {
-                        const otherShape = shapesGroup.children[j];
-                        const dist = shape.position.distanceTo(otherShape.position);
-                        if (dist < 25) {
-                            positions[lineIndex++] = shape.position.x;
-                            positions[lineIndex++] = shape.position.y;
-                            positions[lineIndex++] = shape.position.z;
-                            positions[lineIndex++] = otherShape.position.x;
-                            positions[lineIndex++] = otherShape.position.y;
-                            positions[lineIndex++] = otherShape.position.z;
+                        if (dist < connectionDistance) {
+                            linePositions.push(positions.getX(i), positions.getY(i), positions.getZ(i));
+                            linePositions.push(positions.getX(j), positions.getY(j), positions.getZ(j));
                         }
                     }
-                });
-                
-                // Trim the line geometry
-                connectingLines.geometry.setDrawRange(0, lineIndex / 3);
-                connectingLines.geometry.attributes.position.needsUpdate = true;
-                
-                // Camera rotation based on mouse
-                camera.position.x += (mouse.x * 20 - camera.position.x) * .05;
-                camera.position.y += (mouse.y * 20 - camera.position.y) * .05;
+                }
+                lines.geometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+                positions.needsUpdate = true;
+
+                camera.position.x += (mouse.x * 0.5 - camera.position.x) * 0.05;
+                camera.position.y += (mouse.y * 0.5 - camera.position.y) * 0.05;
                 camera.lookAt(scene.position);
 
-
                 renderer.render(scene, camera);
-            }
+            };
+
+            init();
             animate();
-            
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
         }
         
         // --- Contact Section 3D Animation ---
-        let contactRenderer, contactCamera, contactScene;
+        let contactRenderer, contactCamera, contactScene, contactModel, starField;
         const contactContainer = document.getElementById('contact-animation');
         if(contactContainer){
             contactScene = new THREE.Scene();
@@ -772,43 +654,49 @@
             contactContainer.appendChild(contactRenderer.domElement);
             
             const geometry = new THREE.IcosahedronGeometry(8, 5); 
-            geometry.userData.originalVertices = geometry.attributes.position.clone();
+            const primaryColorHex = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
             const material = new THREE.MeshStandardMaterial({ 
-                color: getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim(), 
+                color: primaryColorHex, 
                 wireframe: true,
-                emissive: getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim(),
+                emissive: primaryColorHex,
                 emissiveIntensity: 0.3
             });
-            const model = new THREE.Mesh(geometry, material);
-            contactScene.add(model);
+            contactModel = new THREE.Mesh(geometry, material);
+            contactScene.add(contactModel);
+            
+            const starGeometry = new THREE.BufferGeometry();
+            const starCount = 5000;
+            const posArray = new Float32Array(starCount * 3);
+            for(let i = 0; i < starCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 150;
+            }
+            starGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0x60a5fa,
+                size: 0.1,
+                transparent: true,
+                blending: THREE.AdditiveBlending
+            });
+            starField = new THREE.Points(starGeometry, starMaterial);
+            contactScene.add(starField);
             
             const pointLight = new THREE.PointLight(0xffffff, 0.7);
             pointLight.position.set(20, 20, 20);
             contactScene.add(pointLight);
-            
-            contactCamera.position.z = 20;
+            const ambientLight = new THREE.AmbientLight(primaryColorHex, 0.3);
+            contactScene.add(ambientLight);
+
+            contactCamera.position.z = 25;
             const contactClock = new THREE.Clock();
 
             function animateContact() {
                 requestAnimationFrame(animateContact);
                 const elapsedTime = contactClock.getElapsedTime();
-                model.rotation.y = elapsedTime * 0.1;
                 
-                const positions = model.geometry.attributes.position;
-                const originalPositions = model.geometry.userData.originalVertices;
-                
-                for(let i = 0; i < positions.count; i++) {
-                    const ox = originalPositions.getX(i);
-                    const oy = originalPositions.getY(i);
-                    const oz = originalPositions.getZ(i);
-                    
-                    const vertexVector = new THREE.Vector3(ox, oy, oz);
-                    const noise = Math.sin(vertexVector.length() + elapsedTime * 1.5) * 0.5 + 0.5;
-                    vertexVector.normalize().multiplyScalar(8 + noise * 2);
-                    
-                    positions.setXYZ(i, vertexVector.x, vertexVector.y, vertexVector.z);
-                }
-                positions.needsUpdate = true;
+                contactModel.rotation.y = elapsedTime * 0.1;
+                contactModel.rotation.x = elapsedTime * 0.05;
+                starField.rotation.y = elapsedTime * 0.03;
 
                 contactRenderer.render(contactScene, contactCamera);
             }
@@ -845,12 +733,12 @@
 
         const typewriterElement = document.getElementById('typewriter');
         if (typewriterElement) {
-            const words = ["Tech & VLSI enthusiast", "Public Speaker", "Learner", "Web Developer"];
+            const words = ["Frontend Developer", "Tech & VLSI Enthusiast", "Public Speaker", "Learner"];
             let wordIndex = 0, charIndex = 0, isDeleting = false;
             function type() {
                 const currentWord = words[wordIndex];
                 typewriterElement.textContent = currentWord.substring(0, charIndex);
-                typewriterElement.style.color = 'var(--deep-blue)';
+                typewriterElement.style.color = 'var(--primary-color)';
 
                 if (isDeleting) charIndex--; else charIndex++;
                 
@@ -883,10 +771,15 @@
         const result = document.getElementById('form-result');
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            const accessKey = form.querySelector('input[name="access_key"]').value;
+            if (accessKey === "40f211cfe39230179eefdfa9379ae888") {
+                result.className = "text-red-500";
+                result.innerHTML = "Please replace 'YOUR_ACCESS_KEY_HERE' with a real Access Key.";
+                return;
+            }
+
             const formData = new FormData(form);
-            const access_key = "f91698d5-9581-4b5d-add4-d739ae6be771";
             const object = Object.fromEntries(formData);
-            object.access_key = access_key;
             const json = JSON.stringify(object);
             result.innerHTML = "Sending...";
             
@@ -897,10 +790,17 @@
             })
             .then(async (response) => {
                 let jsonResponse = await response.json();
-                result.className = response.status == 200 ? "text-green-500" : "text-red-500";
-                result.innerHTML = jsonResponse.message;
+                if (response.status == 200) {
+                    result.className = "text-green-500";
+                    result.innerHTML = jsonResponse.message;
+                } else {
+                    console.log(response);
+                    result.className = "text-red-500";
+                    result.innerHTML = jsonResponse.message;
+                }
             })
             .catch(error => {
+                console.log(error);
                 result.className = "text-red-500";
                 result.innerHTML = "Something went wrong!";
             })
